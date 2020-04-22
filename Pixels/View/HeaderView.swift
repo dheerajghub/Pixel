@@ -13,9 +13,15 @@ struct CategoryData {
     var categoryImage:String!
 }
 
+protocol HeaderActionsProtocol {
+    func didSearchBarTapped()
+    func categoryTapped(_ category:String)
+}
+
 class HeaderView:UIView {
     
     var categoryData = [CategoryData]()
+    var delegate:HeaderActionsProtocol?
     
     let searchBarView: UIView = {
         let view = UIView()
@@ -44,6 +50,7 @@ class HeaderView:UIView {
         let btn = UIButton()
         btn.setTitle("", for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(searchBar), for: .touchUpInside)
         return btn
     }()
     
@@ -111,6 +118,10 @@ class HeaderView:UIView {
         ])
     }
     
+    @objc func searchBar(){
+        delegate?.didSearchBarTapped()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -160,6 +171,10 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             }
         }, completion: { _ in
         })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.categoryTapped(categoryData[indexPath.row].categoryTitle)
     }
 
 }

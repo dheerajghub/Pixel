@@ -8,16 +8,8 @@
 
 import UIKit
 
-class ImagePreviewViewController: UIViewController, UIScrollViewDelegate {
+class ImagePreviewViewController: UIViewController{
 
-    let scrollView: UIScrollView = {
-        let sv = UIScrollView()
-        sv.showsVerticalScrollIndicator = false
-        sv.showsHorizontalScrollIndicator = false
-        sv.contentInsetAdjustmentBehavior = .never
-        return sv
-    }()
-    
     let imageView: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
@@ -28,16 +20,18 @@ class ImagePreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.delegate = self
         view.backgroundColor = .white
-        view.addSubview(scrollView)
-        scrollView.addSubview(imageView)
+        view.addSubview(imageView)
         setUpContraints()
         setUpNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setUpNavigationBar()
+    }
+    
     func setUpNavigationBar(){
-        navigationController?.navigationBar.topItem?.title = ""
+        navigationItem.title = ""
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         
@@ -47,35 +41,23 @@ class ImagePreviewViewController: UIViewController, UIScrollViewDelegate {
         navigationController?.navigationBar.layer.shadowRadius = 0.3
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.isTranslucent = true
+        
+        let backButton = UIButton(type: .system)
+        backButton.setImage(UIImage(named: "whiteBack")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        backButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        backButton.addTarget(self, action: #selector(backBtn), for: .touchUpInside)
+        let leftBarButtonItem = UIBarButtonItem()
+        leftBarButtonItem.customView = backButton
+        navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
+        
+    }
+    
+    @objc func backBtn(){
+        navigationController?.popViewController(animated: true)
     }
     
     func setUpContraints(){
-        scrollView.pin(to: view)
-        imageView.pin(to: scrollView)
+        imageView.pin(to: view)
     }
-    
-    func scrollViewDidZoom(scrollView: UIScrollView) {
-
-        if scrollView.zoomScale > 1 {
-
-            if let image = imageView.image {
-
-                let ratioW = imageView.frame.width / image.size.width
-                let ratioH = imageView.frame.height / image.size.height
-
-                let ratio = ratioW < ratioH ? ratioW:ratioH
-
-                let newWidth = image.size.width*ratio
-                let newHeight = image.size.height*ratio
-
-                let left = 0.5 * (newWidth * scrollView.zoomScale > imageView.frame.width ? (newWidth - imageView.frame.width) : (scrollView.frame.width - scrollView.contentSize.width))
-                let top = 0.5 * (newHeight * scrollView.zoomScale > imageView.frame.height ? (newHeight - imageView.frame.height) : (scrollView.frame.height - scrollView.contentSize.height))
-
-                scrollView.contentInset = UIEdgeInsets(top: top, left: left, bottom: top, right: left)
-            }
-        } else {
-            scrollView.contentInset = UIEdgeInsets.zero
-        }
-    }
-
 }

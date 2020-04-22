@@ -22,6 +22,8 @@
 		44F0B32C244EF340008A5C1F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32B244EF340008A5C1F /* ImageCollectionViewCell.swift */; };
 		44F0B32E244EF5B6008A5C1F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32D244EF5B6008A5C1F /* UIImage.swift */; };
 		44F0B330244F2484008A5C1F /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */; };
+		44F0B332244FEE35008A5C1F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B331244FEE35008A5C1F /* SearchViewController.swift */; };
+		44F0B334244FF073008A5C1F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B333244FF073008A5C1F /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		44F0B32B244EF340008A5C1F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		44F0B32D244EF5B6008A5C1F /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
+		44F0B331244FEE35008A5C1F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		44F0B333244FF073008A5C1F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,8 @@
 				44E78092244DCBEA00491EF7 /* OnboardingViewController.swift */,
 				44F0B31E244EA727008A5C1F /* HomeViewController.swift */,
 				44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */,
+				44F0B331244FEE35008A5C1F /* SearchViewController.swift */,
+				44F0B333244FF073008A5C1F /* CategoryViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -212,7 +218,9 @@
 				44E78098244DCED500491EF7 /* OnboardingCollectionViewCell.swift in Sources */,
 				44E78093244DCBEA00491EF7 /* OnboardingViewController.swift in Sources */,
 				44F0B32A244EF2DF008A5C1F /* CustomLayout.swift in Sources */,
+				44F0B332244FEE35008A5C1F /* SearchViewController.swift in Sources */,
 				44E7807E244DCAF700491EF7 /* SceneDelegate.swift in Sources */,
+				44F0B334244FF073008A5C1F /* CategoryViewController.swift in Sources */,
 				44F0B32E244EF5B6008A5C1F /* UIImage.swift in Sources */,
 				44F0B31F244EA727008A5C1F /* HomeViewController.swift in Sources */,
 				44F0B330244F2484008A5C1F /* ImagePreviewViewController.swift in Sources */,

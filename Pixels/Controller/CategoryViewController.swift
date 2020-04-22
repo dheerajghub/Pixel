@@ -1,22 +1,16 @@
 //
-//  HomeViewController.swift
+//  CategoryViewController.swift
 //  Pixels
 //
-//  Created by Dheeraj Kumar Sharma on 21/04/20.
+//  Created by Dheeraj Kumar Sharma on 22/04/20.
 //  Copyright © 2020 Dheeraj Kumar Sharma. All rights reserved.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController {
-    
+class CategoryViewController: UIViewController {
+
     var imgs = [String]()
-    
-    let headerView: HeaderView = {
-        let view = HeaderView()
-        view.backgroundColor = .white
-        return view
-    }()
     
     let collectionView: UICollectionView = {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
@@ -28,7 +22,6 @@ class HomeViewController: UIViewController {
     
     let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout.scrollDirection = .vertical
@@ -37,28 +30,24 @@ class HomeViewController: UIViewController {
         collectionView.collectionViewLayout = customLayout
         collectionView.delegate = self
         collectionView.dataSource = self
-        headerView.delegate = self
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
-        view.backgroundColor = .white
-        setUpNavigationBar()
-        view.addSubview(headerView)
         view.addSubview(collectionView)
         setUpConstraints()
         imgs = ["travel", "nature", "sports", "architecture", "food"]
-        
         ///Assigning Custom layout
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        setUpNavigationBar()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         setUpNavigationBar()
     }
-
+    
     func setUpNavigationBar(){
-        navigationController?.navigationBar.topItem?.title = "PIXEL"
+        navigationItem.title = "Sports"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0.5)
@@ -72,29 +61,29 @@ class HomeViewController: UIViewController {
             NSAttributedString.Key.font: UIFont(name: "Times-Bold", size: 22)!,
             NSAttributedString.Key.foregroundColor: UIColor.black
         ]
+        
+        let backButton = UIButton(type: .system)
+        backButton.setImage(UIImage(named: "whiteBack")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        backButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        backButton.addTarget(self, action: #selector(backBtn), for: .touchUpInside)
+        let leftBarButtonItem = UIBarButtonItem()
+        leftBarButtonItem.customView = backButton
+        navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
+        
+    }
+        
+    @objc func backBtn(){
+        navigationController?.popViewController(animated: true)
     }
     
     func setUpConstraints(){
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 160)
-        ])
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        collectionView.pin(to: view)
     }
     
 }
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgs.count
@@ -136,20 +125,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
 }
 
-extension HomeViewController: HeaderActionsProtocol{
-    
-    func didSearchBarTapped() {
-        let vc = SearchViewController()
-        present(vc, animated: true, completion: nil)
-    }
-    
-    func categoryTapped(_ category: String) {
-        let vc = CategoryViewController()
-        navigationController?.pushViewController(vc, animated: true)    }
-    
-}
-
-extension HomeViewController: PinterestLayoutDelegate {
+extension CategoryViewController: PinterestLayoutDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
@@ -158,3 +134,4 @@ extension HomeViewController: PinterestLayoutDelegate {
     return CGFloat(collectionView.frame.width / imageRatio!)
   }
 }
+
