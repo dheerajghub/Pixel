@@ -65,7 +65,13 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc func getStartedPressed(){
-        
+        let userDefault = UserDefaults.standard
+        userDefault.set(true, forKey: "onboardingCompletes")
+        userDefault.synchronize()
+        let vc = HomeViewController()
+        let navVC = UINavigationController(rootViewController: vc)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
     }
     
     func setUpConstraints(){

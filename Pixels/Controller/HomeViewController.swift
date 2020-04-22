@@ -11,6 +11,10 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var imgs = [String]()
+    var FetchedImages:FetchImageModel?
+    var imageList:[ListImageData]?
+    var page:Int = 1
+    var isDataLoading = false
     
     let headerView: HeaderView = {
         let view = HeaderView()
@@ -51,6 +55,26 @@ class HomeViewController: UIViewController {
             layout.delegate = self
         }
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "popular", perPage: "10", page: "1") { (FetchedImages) in
+            self.FetchedImages = FetchedImages
+            self.getImageArray(FetchedImages)
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func getImageArray(_ data:FetchImageModel){
+        var images = [ListImageData]()
+        let imgResult = data.photoData
+        for i in 0..<imgResult!.count{
+            let img = ListImageData(id: imgResult![i].id, height: imgResult![i].height, width: imgResult![i].width, thumbnail: imgResult![i].thumbnail)
+            images.append(img)
+        }
+        if imageList == nil {
+            imageList = images
+        } else {
+            imageList?.append(contentsOf: images)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -92,17 +116,44 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let loadMoreFrom = collectionView.contentSize.height - (collectionView.contentSize.height * 30/100)
+        if ((collectionView.contentOffset.y + collectionView.frame.size.height) >= loadMoreFrom){
+            let totalPosts = FetchedImages?.totalResults
+            if !isDataLoading{
+                isDataLoading = true
+                if totalPosts! > imageList!.count {
+                    self.page += 1
+                    FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
+                        self.getImageArray(FetchedImages)
+                        self.collectionView.reloadData()
+                    }
+                    if(totalPosts! > self.imageList!.count){
+                        isDataLoading = false
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imgs.count
+        if let imageList = imageList {
+            return imageList.count
+        }
+        return Int()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        cell.imgView.image = UIImage(named: imgs[indexPath.row])
+        
+        if let imageList = imageList {
+            cell.data = imageList[indexPath.row].thumbnail
+        }
+        
         return cell
     }
     
@@ -115,6 +166,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
                 cell.imgView.transform = .init(scaleX: 0.95, y: 0.95)
+                cell.backView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }, completion: { _ in
         })
@@ -124,6 +176,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
                 cell.imgView.transform = .identity
+                cell.backView.transform = .identity
             }
         }, completion: { _ in
         })
@@ -153,8 +206,11 @@ extension HomeViewController: PinterestLayoutDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    let currImage = UIImage(named: imgs[indexPath.row])
-    let imageRatio = currImage?.getImageRatio()
-    return CGFloat(collectionView.frame.width / imageRatio!)
+    if let imageList = imageList {
+        let cellWidth = (collectionView.frame.width - 44) / 2
+        let imageRatio = CGFloat(imageList[indexPath.row].width) / CGFloat(imageList[indexPath.row].height)
+        return CGFloat(cellWidth / imageRatio)
+    }
+    return CGFloat()
   }
 }

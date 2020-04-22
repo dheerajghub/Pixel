@@ -129,9 +129,10 @@ extension CategoryViewController: PinterestLayoutDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+    let cellWidth = (collectionView.frame.width - 44) / 2
     let currImage = UIImage(named: imgs[indexPath.row])
     let imageRatio = currImage?.getImageRatio()
-    return CGFloat(collectionView.frame.width / imageRatio!)
+    return CGFloat(cellWidth / imageRatio!)
   }
 }
 
