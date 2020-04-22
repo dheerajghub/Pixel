@@ -21,6 +21,7 @@
 		44F0B32A244EF2DF008A5C1F /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B329244EF2DF008A5C1F /* CustomLayout.swift */; };
 		44F0B32C244EF340008A5C1F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32B244EF340008A5C1F /* ImageCollectionViewCell.swift */; };
 		44F0B32E244EF5B6008A5C1F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32D244EF5B6008A5C1F /* UIImage.swift */; };
+		44F0B330244F2484008A5C1F /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		44F0B329244EF2DF008A5C1F /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		44F0B32B244EF340008A5C1F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		44F0B32D244EF5B6008A5C1F /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				44E78092244DCBEA00491EF7 /* OnboardingViewController.swift */,
 				44F0B31E244EA727008A5C1F /* HomeViewController.swift */,
+				44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				44E7807E244DCAF700491EF7 /* SceneDelegate.swift in Sources */,
 				44F0B32E244EF5B6008A5C1F /* UIImage.swift in Sources */,
 				44F0B31F244EA727008A5C1F /* HomeViewController.swift in Sources */,
+				44F0B330244F2484008A5C1F /* ImagePreviewViewController.swift in Sources */,
 				44F0B321244EAA8E008A5C1F /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +355,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9W5STY688V;
 				INFOPLIST_FILE = Pixels/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,7 +363,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dheerajdev.Pixels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -369,6 +374,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9W5STY688V;
 				INFOPLIST_FILE = Pixels/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,7 +382,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dheerajdev.Pixels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

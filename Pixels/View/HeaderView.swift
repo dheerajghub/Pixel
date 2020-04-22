@@ -71,6 +71,7 @@ class HeaderView:UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ImageCategoryCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCategoryCollectionViewCell")
+        collectionView.delaysContentTouches = false
         addSubview(searchBarView)
         searchBarView.addSubview(searchImage)
         searchBarView.addSubview(searchLabel)
@@ -141,6 +142,24 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ImageCategoryCollectionViewCell{
+                cell.cellCardView.transform = .init(scaleX: 0.90, y: 0.90)
+            }
+        }, completion: { _ in
+        })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ImageCategoryCollectionViewCell{
+                cell.cellCardView.transform = .identity
+            }
+        }, completion: { _ in
+        })
     }
 
 }

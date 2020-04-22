@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     }()
     
     let collectionView: UICollectionView = {
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomLayout.init())
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
         cv.showsVerticalScrollIndicator = false
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .white
@@ -33,6 +33,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         layout.scrollDirection = .vertical
         collectionView.setCollectionViewLayout(layout, animated: false)
+        let customLayout = PinterestLayout()
+        collectionView.collectionViewLayout = customLayout
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
@@ -41,12 +43,21 @@ class HomeViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(collectionView)
         setUpConstraints()
-        imgs = ["sports", "architecture", "food", "travel"]
+        imgs = ["travel", "nature", "sports", "architecture", "food"]
         
         ///Assigning Custom layout
-        if let layout = collectionView.collectionViewLayout as? CustomLayout {
+        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setUpNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setUpNavigationBar()
     }
 
     func setUpNavigationBar(){
@@ -98,12 +109,42 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+      let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right + 10)) / 2
+      return CGSize(width: itemSize, height: itemSize)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
+                cell.imgView.transform = .init(scaleX: 0.95, y: 0.95)
+            }
+        }, completion: { _ in
+        })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
+                cell.imgView.transform = .identity
+            }
+        }, completion: { _ in
+        })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ImagePreviewViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
-extension HomeViewController: CustomLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForCellAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let currImage = UIImage(named: imgs[indexPath.row])
-        let imageRatio = currImage?.getImageRatio()
-        return CGFloat(collectionView.frame.width / imageRatio!)
-    }
+extension HomeViewController: PinterestLayoutDelegate {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+    let currImage = UIImage(named: imgs[indexPath.row])
+    let imageRatio = currImage?.getImageRatio()
+    return CGFloat(collectionView.frame.width / imageRatio!)
+  }
 }
