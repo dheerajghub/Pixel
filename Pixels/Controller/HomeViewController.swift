@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
         cv.showsVerticalScrollIndicator = false
         cv.showsHorizontalScrollIndicator = false
-        cv.backgroundColor = .white
+        cv.backgroundColor = UIColor(red: 239/255, green: 252/255, blue: 255/255, alpha: 1)
         return cv
     }()
     
@@ -207,6 +207,7 @@ extension HomeViewController: HeaderActionsProtocol{
     
     func categoryTapped(_ category: String) {
         let vc = CategoryViewController()
+        vc.query = category
         navigationController?.pushViewController(vc, animated: true)    }
     
 }

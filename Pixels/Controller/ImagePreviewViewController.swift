@@ -37,7 +37,7 @@ class ImagePreviewViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.addSubview(backView)
         view.addSubview(imageView)
         view.addSubview(activityIndicator)
@@ -70,7 +70,7 @@ class ImagePreviewViewController: UIViewController{
         navigationController?.navigationBar.isTranslucent = true
         
         let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "whiteBack")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        backButton.setImage(UIImage(named: "blackBack")?.withRenderingMode(.alwaysOriginal), for: .normal)
         backButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         backButton.addTarget(self, action: #selector(backBtn), for: .touchUpInside)

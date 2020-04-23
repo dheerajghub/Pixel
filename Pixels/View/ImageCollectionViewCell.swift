@@ -20,13 +20,15 @@ class ImageCollectionViewCell: UICollectionViewCell {
         let img = CustomImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
+        img.layer.borderColor = UIColor(red: 230/255, green: 230/255, blue:230/255, alpha: 1).cgColor
+        img.layer.borderWidth = 0.5
         img.layer.cornerRadius = 8
         return img
     }()
     
     let backView: UIView = {
         let v = UIView()
-        v.backgroundColor = .lightGray
+        v.backgroundColor = .black
         v.alpha = 0.5
         return v
     }()

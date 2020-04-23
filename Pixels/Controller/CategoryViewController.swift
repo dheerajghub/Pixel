@@ -11,13 +11,24 @@ import UIKit
 class CategoryViewController: UIViewController {
 
     var imgs = [String]()
+    var query = ""
+    var FetchedImages:FetchImageModel?
+    var imageList:[ListImageData]?
     
     let collectionView: UICollectionView = {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
         cv.showsVerticalScrollIndicator = false
         cv.showsHorizontalScrollIndicator = false
-        cv.backgroundColor = .white
+        cv.backgroundColor = UIColor(red: 239/255, green: 252/255, blue: 255/255, alpha: 1)
         return cv
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let aI = UIActivityIndicatorView()
+        aI.style = .large
+        aI.color = .darkGray
+        aI.translatesAutoresizingMaskIntoConstraints = false
+        return aI
     }()
     
     let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
@@ -32,14 +43,36 @@ class CategoryViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
         view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
         setUpConstraints()
-        imgs = ["travel", "nature", "sports", "architecture", "food"]
         ///Assigning Custom layout
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         setUpNavigationBar()
+        activityIndicator.startAnimating()
+        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "\(query)", perPage: "20", page: "1") { (FetchedImages) in
+            self.FetchedImages = FetchedImages
+            self.getImageArray(FetchedImages)
+            self.collectionView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }
+    }
+    
+    func getImageArray(_ data:FetchImageModel){
+        var images = [ListImageData]()
+        let imgResult = data.photoData
+        for i in 0..<imgResult!.count{
+            let img = ListImageData(id: imgResult![i].id, height: imgResult![i].height, width: imgResult![i].width, thumbnail: imgResult![i].thumbnail)
+            images.append(img)
+        }
+        if imageList == nil {
+            imageList = images
+        } else {
+            imageList?.append(contentsOf: images)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +80,7 @@ class CategoryViewController: UIViewController {
     }
     
     func setUpNavigationBar(){
-        navigationItem.title = "Sports"
+        navigationItem.title = "\(query)"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0.5)
@@ -79,6 +112,10 @@ class CategoryViewController: UIViewController {
     
     func setUpConstraints(){
         collectionView.pin(to: view)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
 }
@@ -86,12 +123,15 @@ class CategoryViewController: UIViewController {
 extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imgs.count
+        if let imageList = imageList {
+            return imageList.count
+        }
+        return Int()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        cell.imgView.image = UIImage(named: imgs[indexPath.row])
+        cell.data = imageList![indexPath.row].thumbnail
         return cell
     }
     
@@ -104,6 +144,7 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
                 cell.imgView.transform = .init(scaleX: 0.95, y: 0.95)
+                cell.backView.transform = .init(scaleX: 0.95, y: 0.95)
             }
         }, completion: { _ in
         })
@@ -113,6 +154,7 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             if let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell{
                 cell.imgView.transform = .identity
+                cell.backView.transform = .identity
             }
         }, completion: { _ in
         })
@@ -120,6 +162,7 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ImagePreviewViewController()
+        vc.imageId = imageList![indexPath.row].id
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -129,10 +172,12 @@ extension CategoryViewController: PinterestLayoutDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    let cellWidth = (collectionView.frame.width - 44) / 2
-    let currImage = UIImage(named: imgs[indexPath.row])
-    let imageRatio = currImage?.getImageRatio()
-    return CGFloat(cellWidth / imageRatio!)
+    if let imageList = imageList {
+        let cellWidth = (collectionView.frame.width - 44) / 2
+        let imageRatio = CGFloat(imageList[indexPath.row].width) / CGFloat(imageList[indexPath.row].height)
+        return CGFloat(cellWidth / imageRatio)
+    }
+    return CGFloat()
   }
 }
 
