@@ -102,8 +102,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-        hideKeyboardWhenTappedAround()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
