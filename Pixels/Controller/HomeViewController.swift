@@ -90,6 +90,7 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowRadius = 0.3
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isHidden = false
         
         self.navigationController!.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont(name: "Times-Bold", size: 22)!,
@@ -181,13 +182,14 @@ extension HomeViewController: HeaderActionsProtocol{
     
     func didSearchBarTapped() {
         let vc = SearchViewController()
-        present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: false)
     }
     
     func categoryTapped(_ category: String) {
         let vc = CategoryViewController()
         vc.query = category
-        navigationController?.pushViewController(vc, animated: true)    }
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
 

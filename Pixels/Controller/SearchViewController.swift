@@ -101,11 +101,18 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         }
         
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        hideKeyboardWhenTappedAround()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
     }
     
     func setUpConstraints(){
         NSLayoutConstraint.activate([
-            navView.topAnchor.constraint(equalTo: view.topAnchor),
+            navView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             navView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navView.heightAnchor.constraint(equalToConstant: 70),
@@ -159,7 +166,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func cancelModal(){
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: false)
     }
     
     @objc func handleKeyboardNotification(notification: NSNotification){

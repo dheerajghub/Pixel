@@ -28,7 +28,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     let backView: UIView = {
         let v = UIView()
-        v.backgroundColor = .black
+        v.backgroundColor = .lightGray
+        v.layer.cornerRadius = 8
         v.alpha = 0.5
         return v
     }()
