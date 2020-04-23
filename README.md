@@ -3,6 +3,7 @@
 # What is Pixel ?
 Pixel is an image exploring iOS App build with <a href="https://www.pexels.com/api/"> Pexels API </a> with complete Programmatic Swift. This project surely helps you to understand the basics to advanced concepts in an iOS application. You can check list down below that this project features and I've also use dependencies ( just a few ), you will know how to use them as well. This project covers the following concepts.
 
+- MVC Pattern
 - Programmatic UI in swift 5.1
 - Custom Collection view layout (Pinterest layout)
 - Networking and handling requests
