@@ -10,20 +10,47 @@ import UIKit
 
 class ImagePreviewViewController: UIViewController{
 
-    let imageView: UIImageView = {
-        let imgView = UIImageView()
+    var imageId = 0
+    var imageForPreview:FetchImageDetailModel?
+    
+    let imageView: CustomImageView = {
+        let imgView = CustomImageView()
         imgView.contentMode = .scaleAspectFit
-        imgView.image = UIImage(named: "sports")
         imgView.clipsToBounds = true
         return imgView
+    }()
+    
+    let backView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .lightGray
+        v.alpha = 0.5
+        return v
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let aI = UIActivityIndicatorView()
+        aI.style = .large
+        aI.color = .darkGray
+        aI.translatesAutoresizingMaskIntoConstraints = false
+        return aI
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        view.addSubview(backView)
         view.addSubview(imageView)
+        view.addSubview(activityIndicator)
         setUpContraints()
         setUpNavigationBar()
+        activityIndicator.startAnimating()
+        FetchImageDetailModel.fetchImages(url: "\(Constants.BASE_URL)/photos", id: "\(imageId)") { (imageForPreview) in
+            self.imageForPreview = imageForPreview
+            self.imageView.cacheImageWithLoader(withURL: imageForPreview.imageUrl, view: self.backView)
+            self.view.reloadInputViews()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,5 +86,10 @@ class ImagePreviewViewController: UIViewController{
     
     func setUpContraints(){
         imageView.pin(to: view)
+        backView.pin(to: view)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
 }

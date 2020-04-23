@@ -54,8 +54,8 @@ class HomeViewController: UIViewController {
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "popular", perPage: "10", page: "1") { (FetchedImages) in
             self.FetchedImages = FetchedImages
             self.getImageArray(FetchedImages)
@@ -116,25 +116,25 @@ class HomeViewController: UIViewController {
         ])
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let loadMoreFrom = collectionView.contentSize.height - (collectionView.contentSize.height * 30/100)
-        if ((collectionView.contentOffset.y + collectionView.frame.size.height) >= loadMoreFrom){
-            let totalPosts = FetchedImages?.totalResults
-            if !isDataLoading{
-                isDataLoading = true
-                if totalPosts! > imageList!.count {
-                    self.page += 1
-                    FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
-                        self.getImageArray(FetchedImages)
-                        self.collectionView.reloadData()
-                    }
-                    if(totalPosts! > self.imageList!.count){
-                        isDataLoading = false
-                    }
-                }
-            }
-        }
-    }
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        let loadMoreFrom = collectionView.contentSize.height - (collectionView.contentSize.height * 30/100)
+//        if ((collectionView.contentOffset.y + collectionView.frame.size.height) >= loadMoreFrom){
+//            let totalPosts = FetchedImages?.totalResults
+//            if !isDataLoading{
+//                isDataLoading = true
+//                if totalPosts! > imageList!.count {
+//                    self.page += 1
+//                    FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
+//                        self.getImageArray(FetchedImages)
+//                        self.collectionView.reloadData()
+//                    }
+//                    if(totalPosts! > self.imageList!.count){
+//                        isDataLoading = false
+//                    }
+//                }
+//            }
+//        }
+//    }
     
 }
 
@@ -149,9 +149,17 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
+        cell.data = imageList![indexPath.row].thumbnail
         
-        if let imageList = imageList {
-            cell.data = imageList[indexPath.row].thumbnail
+        let totalPosts = FetchedImages?.totalResults
+        if indexPath.row == imageList!.count - 1{
+            if totalPosts! > imageList!.count {
+                self.page += 1
+                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
+                    self.getImageArray(FetchedImages)
+                    self.collectionView.reloadData()
+                }
+            }
         }
         
         return cell
@@ -184,6 +192,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ImagePreviewViewController()
+        vc.imageId = imageList![indexPath.row].id
         navigationController?.pushViewController(vc, animated: true)
     }
     
