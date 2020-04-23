@@ -14,6 +14,7 @@ class CategoryViewController: UIViewController {
     var query = ""
     var FetchedImages:FetchImageModel?
     var imageList:[ListImageData]?
+    var page:Int = 1
     
     let collectionView: UICollectionView = {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
@@ -132,6 +133,19 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         cell.data = imageList![indexPath.row].thumbnail
+        
+        let totalPosts = FetchedImages?.totalResults
+        if indexPath.row == imageList!.count - 1{
+            if totalPosts! > imageList!.count {
+                self.page += 1
+                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"\(query)", perPage:"20", page:"\(page)") { (FetchedImages) in
+                    self.getImageArray(FetchedImages)
+                    self.collectionView.reloadData()
+                    self.collectionView.collectionViewLayout.invalidateLayout()
+                }
+            }
+        }
+        
         return cell
     }
     

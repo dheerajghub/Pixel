@@ -10,7 +10,6 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var imgs = [String]()
     var FetchedImages:FetchImageModel?
     var imageList:[ListImageData]?
     var page:Int = 1
@@ -48,7 +47,6 @@ class HomeViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(collectionView)
         setUpConstraints()
-        imgs = ["travel", "nature", "sports", "architecture", "food"]
         
         ///Assigning Custom layout
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
@@ -56,6 +54,7 @@ class HomeViewController: UIViewController {
         }
         
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
         FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "popular", perPage: "10", page: "1") { (FetchedImages) in
             self.FetchedImages = FetchedImages
             self.getImageArray(FetchedImages)
@@ -115,27 +114,6 @@ class HomeViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        let loadMoreFrom = collectionView.contentSize.height - (collectionView.contentSize.height * 30/100)
-//        if ((collectionView.contentOffset.y + collectionView.frame.size.height) >= loadMoreFrom){
-//            let totalPosts = FetchedImages?.totalResults
-//            if !isDataLoading{
-//                isDataLoading = true
-//                if totalPosts! > imageList!.count {
-//                    self.page += 1
-//                    FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
-//                        self.getImageArray(FetchedImages)
-//                        self.collectionView.reloadData()
-//                    }
-//                    if(totalPosts! > self.imageList!.count){
-//                        isDataLoading = false
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -158,6 +136,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                 FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"popular", perPage:"10", page:"\(page)") { (FetchedImages) in
                     self.getImageArray(FetchedImages)
                     self.collectionView.reloadData()
+                    self.collectionView.collectionViewLayout.invalidateLayout()
                 }
             }
         }
