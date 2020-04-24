@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let userDefaults = UserDefaults.standard
         if userDefaults.bool(forKey: "onboardingCompletes"){
-            window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+            
+            window?.rootViewController = CustomTabBarViewController()
         } else {
             window?.rootViewController = OnboardingViewController()
         }

@@ -30,7 +30,7 @@ class ImagePreviewViewController: UIViewController{
     let activityIndicator: UIActivityIndicatorView = {
         let aI = UIActivityIndicatorView()
         aI.style = .large
-        aI.color = .darkGray
+        aI.color = .white
         aI.translatesAutoresizingMaskIntoConstraints = false
         return aI
     }()
