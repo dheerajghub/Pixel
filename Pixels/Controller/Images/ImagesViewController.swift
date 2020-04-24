@@ -1,20 +1,24 @@
 //
-//  CategoryViewController.swift
+//  ImagesViewController.swift
 //  Pixels
 //
-//  Created by Dheeraj Kumar Sharma on 22/04/20.
+//  Created by Dheeraj Kumar Sharma on 21/04/20.
 //  Copyright © 2020 Dheeraj Kumar Sharma. All rights reserved.
 //
 
 import UIKit
 
-class CategoryViewController: UIViewController {
-
-    var imgs = [String]()
-    var query = ""
+class ImagesViewController: UIViewController {
+    
     var FetchedImages:FetchImageModel?
     var imageList:[ListImageData]?
     var page:Int = 1
+    
+    let headerView: HeaderView = {
+        let view = HeaderView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     let collectionView: UICollectionView = {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: PinterestLayout.init())
@@ -24,15 +28,8 @@ class CategoryViewController: UIViewController {
         return cv
     }()
     
-    let activityIndicator: UIActivityIndicatorView = {
-        let aI = UIActivityIndicatorView()
-        aI.style = .large
-        aI.color = .darkGray
-        aI.translatesAutoresizingMaskIntoConstraints = false
-        return aI
-    }()
-    
     let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,23 +39,25 @@ class CategoryViewController: UIViewController {
         collectionView.collectionViewLayout = customLayout
         collectionView.delegate = self
         collectionView.dataSource = self
+        headerView.delegate = self
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        view.backgroundColor = .white
+        setUpNavigationBar()
+        view.addSubview(headerView)
         view.addSubview(collectionView)
-        view.addSubview(activityIndicator)
         setUpConstraints()
+        
         ///Assigning Custom layout
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
+        
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        setUpNavigationBar()
-        activityIndicator.startAnimating()
-        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "\(query)", perPage: "20", page: "1") { (FetchedImages) in
+        
+        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "new", perPage: "10", page: "1") { (FetchedImages) in
             self.FetchedImages = FetchedImages
             self.getImageArray(FetchedImages)
             self.collectionView.reloadData()
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.isHidden = true
         }
     }
     
@@ -75,13 +74,15 @@ class CategoryViewController: UIViewController {
             imageList?.append(contentsOf: images)
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         setUpNavigationBar()
+        tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.layer.zPosition = 0
     }
-    
+
     func setUpNavigationBar(){
-        navigationItem.title = "\(query)"
+        navigationController?.navigationBar.topItem?.title = "PIXEL"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0.5)
@@ -90,38 +91,34 @@ class CategoryViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowRadius = 0.3
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isHidden = false
         
         self.navigationController!.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont(name: "Times-Bold", size: 22)!,
             NSAttributedString.Key.foregroundColor: UIColor.black
         ]
-        
-        let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "whiteBack")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        backButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        backButton.addTarget(self, action: #selector(backBtn), for: .touchUpInside)
-        let leftBarButtonItem = UIBarButtonItem()
-        leftBarButtonItem.customView = backButton
-        navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
-        
-    }
-        
-    @objc func backBtn(){
-        navigationController?.popViewController(animated: true)
     }
     
     func setUpConstraints(){
-        collectionView.pin(to: view)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 160)
+        ])
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
 }
 
-extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension ImagesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let imageList = imageList {
@@ -138,7 +135,7 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
         if indexPath.row == imageList!.count - 1{
             if totalPosts! > imageList!.count {
                 self.page += 1
-                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"\(query)", perPage:"20", page:"\(page)") { (FetchedImages) in
+                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"new", perPage:"10", page:"\(page)") { (FetchedImages) in
                     self.getImageArray(FetchedImages)
                     self.collectionView.reloadData()
                     self.collectionView.collectionViewLayout.invalidateLayout()
@@ -182,7 +179,22 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
     
 }
 
-extension CategoryViewController: PinterestLayoutDelegate {
+extension ImagesViewController: HeaderActionsProtocol{
+    
+    func didSearchBarTapped() {
+        let vc = SearchViewController()
+        navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    func categoryTapped(_ category: String) {
+        let vc = CategoryViewController()
+        vc.query = category
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+extension ImagesViewController: PinterestLayoutDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
@@ -194,4 +206,3 @@ extension CategoryViewController: PinterestLayoutDelegate {
     return CGFloat()
   }
 }
-

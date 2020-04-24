@@ -68,7 +68,7 @@ class OnboardingViewController: UIViewController {
         let userDefault = UserDefaults.standard
         userDefault.set(true, forKey: "onboardingCompletes")
         userDefault.synchronize()
-        let vc = HomeViewController()
+        let vc = ImagesViewController()
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)

@@ -56,6 +56,8 @@ class ImagePreviewViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         setUpNavigationBar()
         navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.layer.zPosition = -1
     }
     
     func setUpNavigationBar(){
