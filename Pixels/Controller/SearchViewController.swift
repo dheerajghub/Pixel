@@ -67,6 +67,22 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let aI = UIActivityIndicatorView()
+        aI.style = .medium
+        aI.color = .darkGray
+        aI.translatesAutoresizingMaskIntoConstraints = false
+        return aI
+    }()
+    
+    let loadingMessage:UILabel = {
+        let message = UILabel()
+        message.font = UIFont(name: "Times", size: 20)
+        message.textColor = .darkGray
+        message.translatesAutoresizingMaskIntoConstraints = false
+        return message
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout.scrollDirection = .vertical
@@ -83,6 +99,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         navView.addSubview(seperatorView)
         navView.addSubview(cancelBtn)
         view.addSubview(collectionView)
+        collectionView.addSubview(activityIndicator)
+        collectionView.addSubview(loadingMessage)
         setUpConstraints()
         
         searchTextField.addTarget(self, action: #selector(SearchViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
@@ -133,7 +151,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             collectionView.topAnchor.constraint(equalTo: navView.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 30),
+            
+            loadingMessage.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 10),
+            loadingMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
@@ -152,15 +176,30 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 , execute: {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
             FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: self.searchTextField.text!, perPage: "40", page: "1") { (FetchedImages) in
                 self.FetchedImages = FetchedImages
                 self.imageList?.removeAll()
                 self.getImageArray(FetchedImages)
+                if(self.FetchedImages?.photoData.count == 0){
+                    self.loadingMessage.text = "No result"
+                } else {
+                    self.loadingMessage.text = ""
+                }
                 self.collectionView.reloadData()
                 self.collectionView.collectionViewLayout.invalidateLayout()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
+            
+            if self.searchTextField.text == ""{
+                self.loadingMessage.text = ""
             }
         })
+        
     }
     
     @objc func cancelModal(){

@@ -55,7 +55,7 @@ class HomeViewController: UIViewController {
         
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "trending", perPage: "10", page: "1") { (FetchedImages) in
+        FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query: "new", perPage: "10", page: "1") { (FetchedImages) in
             self.FetchedImages = FetchedImages
             self.getImageArray(FetchedImages)
             self.collectionView.reloadData()
@@ -134,7 +134,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if indexPath.row == imageList!.count - 1{
             if totalPosts! > imageList!.count {
                 self.page += 1
-                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"trending", perPage:"10", page:"\(page)") { (FetchedImages) in
+                FetchImageModel.fetchImages(url: "\(Constants.BASE_URL)/search", query:"new", perPage:"10", page:"\(page)") { (FetchedImages) in
                     self.getImageArray(FetchedImages)
                     self.collectionView.reloadData()
                     self.collectionView.collectionViewLayout.invalidateLayout()
