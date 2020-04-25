@@ -57,9 +57,9 @@ class OnboardingViewController: UIViewController {
         view.insertSubview(collectionView, belowSubview: pageControl)
         setUpConstraints()
         dataArr = [
-            OnboardingData(image: "graphic1", title: "Explore Images", subtitle: "Explore large collection of images"),
-            OnboardingData(image: "graphic2", title: "Category Search", subtitle: "Search image with category"),
-            OnboardingData(image: "graphic3", title: "Download Images", subtitle: "Pick and save image to you imageroll"),
+            OnboardingData(image: "graphic1", title: "Explore Images and Videos", subtitle: "Explore large collection of images"),
+            OnboardingData(image: "graphic2", title: "Category Search", subtitle: "Search image and videos with category"),
+            OnboardingData(image: "graphic3", title: "Download Images and Video", subtitle: "Pick and save image and video to you photoroll"),
         ]
         getStartedButton.isHidden = true
     }
