@@ -193,7 +193,7 @@ extension VideosViewController: UICollectionViewDataSource, UICollectionViewDele
 extension VideosViewController: HeaderActionsProtocol{
     
     func didSearchBarTapped() {
-        let vc = SearchViewController()
+        let vc = VideoSearchViewController()
         navigationController?.pushViewController(vc, animated: false)
     }
     

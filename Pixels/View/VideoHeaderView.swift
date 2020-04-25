@@ -82,12 +82,12 @@ class VideoHeaderView: UIView {
                 CategoryData(categoryTitle: "Gaming", categoryImage: "gaming"),
                 CategoryData(categoryTitle: "DIY", categoryImage: "DIY"),
                 CategoryData(categoryTitle: "Education", categoryImage: "education"),
-                CategoryData(categoryTitle: "News & Politics", categoryImage: "news"),
+                CategoryData(categoryTitle: "News", categoryImage: "news"),
                 CategoryData(categoryTitle: "Entertainment", categoryImage: "entertainment"),
-                CategoryData(categoryTitle: "Pet & animals", categoryImage: "animals"),
+                CategoryData(categoryTitle: "Animals", categoryImage: "animals"),
                 CategoryData(categoryTitle: "Food", categoryImage: "food"),
                 CategoryData(categoryTitle: "Travel", categoryImage: "travel"),
-                CategoryData(categoryTitle: "Auto & vehicles", categoryImage: "vehicles"),
+                CategoryData(categoryTitle: "Vehicles", categoryImage: "vehicles"),
                 CategoryData(categoryTitle: "Animations", categoryImage: "animation")
             ]
         }

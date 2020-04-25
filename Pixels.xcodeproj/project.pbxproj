@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0CE3D659A11D71B0C88352A3 /* Pods_Pixels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED6220032A6C76298537BC0 /* Pods_Pixels.framework */; };
 		4424B69224533CAB00A487A4 /* VideoCatgoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424B69124533CAB00A487A4 /* VideoCatgoryViewController.swift */; };
-		4424B69424533F8D00A487A4 /* VideoPreviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424B69324533F8D00A487A4 /* VideoPreviewDetailViewController.swift */; };
+		4424B6962453D04000A487A4 /* VideoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424B6952453D04000A487A4 /* VideoSearchViewController.swift */; };
 		442796292452D82900A17E33 /* CustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442796282452D82900A17E33 /* CustomTabBarViewController.swift */; };
 		4427962B2452D86400A17E33 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4427962A2452D86400A17E33 /* VideosViewController.swift */; };
 		4427962F24530EBA00A17E33 /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4427962E24530EBA00A17E33 /* VideoCollectionViewCell.swift */; };
@@ -42,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		4424B69124533CAB00A487A4 /* VideoCatgoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCatgoryViewController.swift; sourceTree = "<group>"; };
-		4424B69324533F8D00A487A4 /* VideoPreviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewDetailViewController.swift; sourceTree = "<group>"; };
+		4424B6952453D04000A487A4 /* VideoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSearchViewController.swift; sourceTree = "<group>"; };
 		442796282452D82900A17E33 /* CustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarViewController.swift; sourceTree = "<group>"; };
 		4427962A2452D86400A17E33 /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		4427962E24530EBA00A17E33 /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 			children = (
 				4427962A2452D86400A17E33 /* VideosViewController.swift */,
 				4424B69124533CAB00A487A4 /* VideoCatgoryViewController.swift */,
-				4424B69324533F8D00A487A4 /* VideoPreviewDetailViewController.swift */,
+				4424B6952453D04000A487A4 /* VideoSearchViewController.swift */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
@@ -333,9 +333,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4424B69424533F8D00A487A4 /* VideoPreviewDetailViewController.swift in Sources */,
 				44F0B325244EBE11008A5C1F /* ImageCategoryCollectionViewCell.swift in Sources */,
 				44D7D0CA24505D31005CA062 /* Constants.swift in Sources */,
+				4424B6962453D04000A487A4 /* VideoSearchViewController.swift in Sources */,
 				442796292452D82900A17E33 /* CustomTabBarViewController.swift in Sources */,
 				44F0B32C244EF340008A5C1F /* ImageCollectionViewCell.swift in Sources */,
 				44E78096244DCDA900491EF7 /* UIView.swift in Sources */,
