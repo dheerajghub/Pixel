@@ -22,3 +22,11 @@ Pixel is an image and video exploring iOS App build with <a href="https://www.pe
 # Dependecies I've used
 - `Alamofire` - For Networking.
 - `SwiftyJSON` - For handling the JSON response.
+
+## Donation
+If you find this project useful and you want to support me , you can buy me a cup of coffee!
+
+[![Paypal](https://imgur.com/FokjFDA.png)](paypal.me/PayDheeraj)
+
+## Credits
+**©** **Dheeraj kumar sharma** - *2020*
