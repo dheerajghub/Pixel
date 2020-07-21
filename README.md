@@ -26,7 +26,7 @@ Pixel is an image and video exploring iOS App build with <a href="https://www.pe
 ## Donation
 If you find this project useful and you want to support me , you can buy me a cup of coffee!
 
-[![Paypal](https://imgur.com/FokjFDA.png)](paypal.me/PayDheeraj)
+[![Paypal](https://imgur.com/FokjFDA.png)](https://paypal.me/PayDheeraj)
 
 ## Credits
 **©** **Dheeraj kumar sharma** - *2020*
