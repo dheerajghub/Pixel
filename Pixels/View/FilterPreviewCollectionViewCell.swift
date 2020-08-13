@@ -13,7 +13,7 @@ class FilterPreviewCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet{
             filteredImage.layer.borderWidth = isSelected ? 3 : 0
-            filterName.textColor = isSelected ? .black : .lightGray
+            filterName.textColor = isSelected ? .white : .lightGray
         }
     }
     
@@ -23,7 +23,7 @@ class FilterPreviewCollectionViewCell: UICollectionViewCell {
         img.image = UIImage(named: "food")
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.layer.borderColor = UIColor.black.cgColor
+        img.layer.borderColor = UIColor.white.cgColor
         return img
     }()
     

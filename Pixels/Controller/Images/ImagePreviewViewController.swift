@@ -99,6 +99,8 @@ class ImagePreviewViewController: UIViewController{
     
     @objc func editButtonPressed(){
         let VC = EditImageViewController()
+        VC.selectedImg = self.imageView.image
+        VC.originalImg = self.imageView.image
         let navVC = UINavigationController(rootViewController: VC)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)

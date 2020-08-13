@@ -11,25 +11,19 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         
-//        let userDefaults = UserDefaults.standard
-//        if userDefaults.bool(forKey: "onboardingCompletes"){
-//
-//            window?.rootViewController = CustomTabBarViewController()
-//        } else {
-//            window?.rootViewController = OnboardingViewController()
-//        }
-        
-        let VC = EditImageViewController()
-        let navVC = UINavigationController(rootViewController: VC)
-        navVC.modalPresentationStyle = .fullScreen
-        window?.rootViewController = navVC
+        let userDefaults = UserDefaults.standard
+        if userDefaults.bool(forKey: "onboardingCompletes"){
+
+            window?.rootViewController = CustomTabBarViewController()
+        } else {
+            window?.rootViewController = OnboardingViewController()
+        }
         
         window?.makeKeyAndVisible()
     }

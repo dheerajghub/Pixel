@@ -26,7 +26,6 @@ class EditImageViewController: UIViewController {
     let imageView:UIImageView = {
         let img = UIImageView()
         img.clipsToBounds = true
-        img.backgroundColor = .red
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFit
         return img
@@ -35,6 +34,7 @@ class EditImageViewController: UIViewController {
     let filtersView:UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .black
         return v
     }()
     
@@ -79,9 +79,6 @@ class EditImageViewController: UIViewController {
             filterEffect(filterName: "Transfer", filterCIName: "CIPhotoEffectTransfer"),
             filterEffect(filterName: "Sepia Tone", filterCIName: "CISepiaTone")
         ]
-        
-        selectedImg = UIImage(named: "food")
-        originalImg = UIImage(named: "food")
     }
     
     override func viewWillAppear(_ animated: Bool) {
