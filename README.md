@@ -12,8 +12,8 @@ Pixel is an image and video exploring iOS App build with <a href="https://www.pe
 - Onboarding
 
 ## Snapshots
-<p align="center"><img src="https://imgur.com/ycStAmm.png" height="400"> <img src="https://imgur.com/7qbivs3.png" height="400"> <img src="https://imgur.com/H3Vp3Tl.png" height="400"> <img src="https://imgur.com/weNgE9i.png" height="450"></p>
-<p align="center"><img src="https://imgur.com/347If26.png" height="400"> <img src="https://imgur.com/8zqOkfx.png" height="400"> <img src="https://imgur.com/P4nzJjc.png" height="400"> <img src="https://imgur.com/eMeWXKZ.png" height="450"></p>
+<p align="center"><img src="https://imgur.com/ycStAmm.png" height="400"> <img src="https://imgur.com/7qbivs3.png" height="400"> <img src="https://imgur.com/H3Vp3Tl.png" height="400"> <img src="https://imgur.com/weNgE9i.png" height="400"></p>
+<p align="center"><img src="https://imgur.com/347If26.png" height="400"> <img src="https://imgur.com/8zqOkfx.png" height="400"> <img src="https://imgur.com/P4nzJjc.png" height="400"> <img src="https://imgur.com/eMeWXKZ.png" height="400"></p>
 
 
 ## Video
