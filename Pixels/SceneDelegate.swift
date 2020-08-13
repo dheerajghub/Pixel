@@ -18,13 +18,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         
-        let userDefaults = UserDefaults.standard
-        if userDefaults.bool(forKey: "onboardingCompletes"){
-            
-            window?.rootViewController = CustomTabBarViewController()
-        } else {
-            window?.rootViewController = OnboardingViewController()
-        }
+//        let userDefaults = UserDefaults.standard
+//        if userDefaults.bool(forKey: "onboardingCompletes"){
+//
+//            window?.rootViewController = CustomTabBarViewController()
+//        } else {
+//            window?.rootViewController = OnboardingViewController()
+//        }
+        
+        let VC = EditImageViewController()
+        let navVC = UINavigationController(rootViewController: VC)
+        navVC.modalPresentationStyle = .fullScreen
+        window?.rootViewController = navVC
         
         window?.makeKeyAndVisible()
     }

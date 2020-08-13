@@ -15,6 +15,7 @@ class ImagePreviewViewController: UIViewController{
     
     let imageView: CustomImageView = {
         let imgView = CustomImageView()
+        imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
         return imgView
@@ -37,7 +38,7 @@ class ImagePreviewViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         view.addSubview(backView)
         view.addSubview(imageView)
         view.addSubview(activityIndicator)
@@ -81,18 +82,38 @@ class ImagePreviewViewController: UIViewController{
         leftBarButtonItem.customView = backButton
         navigationItem.setLeftBarButton(leftBarButtonItem, animated: false)
         
+        let editButton = UIButton(type: .system)
+        editButton.setImage(UIImage(named: "edit")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        editButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+        editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+        let rightBarButtonItem = UIBarButtonItem()
+        rightBarButtonItem.customView = editButton
+        navigationItem.setRightBarButton(rightBarButtonItem, animated: false)
+        
     }
     
     @objc func backBtn(){
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func editButtonPressed(){
+        let VC = EditImageViewController()
+        let navVC = UINavigationController(rootViewController: VC)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
+    }
+    
     func setUpContraints(){
-        imageView.pin(to: view)
         backView.pin(to: view)
         NSLayoutConstraint.activate([
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }

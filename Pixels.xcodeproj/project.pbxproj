@@ -38,9 +38,11 @@
 		44F0B330244F2484008A5C1F /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */; };
 		44F0B332244FEE35008A5C1F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B331244FEE35008A5C1F /* SearchViewController.swift */; };
 		44F0B334244FF073008A5C1F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0B333244FF073008A5C1F /* CategoryViewController.swift */; };
+		44F561F124E4EC5400BCA0B1 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F561F024E4EC5400BCA0B1 /* EditImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12BA1288A6A3B644165EA2B4 /* Pods-Pixels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pixels.release.xcconfig"; path = "Target Support Files/Pods-Pixels/Pods-Pixels.release.xcconfig"; sourceTree = "<group>"; };
 		4424B69124533CAB00A487A4 /* VideoCatgoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCatgoryViewController.swift; sourceTree = "<group>"; };
 		4424B6952453D04000A487A4 /* VideoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSearchViewController.swift; sourceTree = "<group>"; };
 		442796282452D82900A17E33 /* CustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarViewController.swift; sourceTree = "<group>"; };
@@ -73,8 +75,8 @@
 		44F0B32F244F2484008A5C1F /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		44F0B331244FEE35008A5C1F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		44F0B333244FF073008A5C1F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
-		B115FB5CCECCC4BF6090F48B /* Pods-Pixels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pixels.release.xcconfig"; path = "Target Support Files/Pods-Pixels/Pods-Pixels.release.xcconfig"; sourceTree = "<group>"; };
-		CEA0B64ABDB8C086B2BAF12D /* Pods-Pixels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pixels.debug.xcconfig"; path = "Target Support Files/Pods-Pixels/Pods-Pixels.debug.xcconfig"; sourceTree = "<group>"; };
+		44F561F024E4EC5400BCA0B1 /* EditImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageViewController.swift; sourceTree = "<group>"; };
+		7AADB89C02DAC41995FEE21B /* Pods-Pixels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pixels.debug.xcconfig"; path = "Target Support Files/Pods-Pixels/Pods-Pixels.debug.xcconfig"; sourceTree = "<group>"; };
 		EED6220032A6C76298537BC0 /* Pods_Pixels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pixels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -116,8 +118,8 @@
 			children = (
 				44E7807A244DCAF700491EF7 /* Pixels */,
 				44E78079244DCAF700491EF7 /* Products */,
-				B724E8D32BAA77A73CC5A58D /* Pods */,
 				7EB2547125A124F16B1AD715 /* Frameworks */,
+				59777D8EFDDC12F88365FBE8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,6 +150,7 @@
 		44E7808F244DCBB800491EF7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				44F561EF24E4EC3E00BCA0B1 /* EditImages */,
 				4427962D24530D3E00A17E33 /* Videos */,
 				4427962C24530A8C00A17E33 /* Images */,
 				44E78092244DCBEA00491EF7 /* OnboardingViewController.swift */,
@@ -202,21 +205,29 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		44F561EF24E4EC3E00BCA0B1 /* EditImages */ = {
+			isa = PBXGroup;
+			children = (
+				44F561F024E4EC5400BCA0B1 /* EditImageViewController.swift */,
+			);
+			path = EditImages;
+			sourceTree = "<group>";
+		};
+		59777D8EFDDC12F88365FBE8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7AADB89C02DAC41995FEE21B /* Pods-Pixels.debug.xcconfig */,
+				12BA1288A6A3B644165EA2B4 /* Pods-Pixels.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7EB2547125A124F16B1AD715 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				EED6220032A6C76298537BC0 /* Pods_Pixels.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B724E8D32BAA77A73CC5A58D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CEA0B64ABDB8C086B2BAF12D /* Pods-Pixels.debug.xcconfig */,
-				B115FB5CCECCC4BF6090F48B /* Pods-Pixels.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +241,7 @@
 				44E78074244DCAF700491EF7 /* Sources */,
 				44E78075244DCAF700491EF7 /* Frameworks */,
 				44E78076244DCAF700491EF7 /* Resources */,
-				7258180633753A7A1A81BBA6 /* [CP] Embed Pods Frameworks */,
+				ECADCF90D9A12ADC4B84C60B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -287,23 +298,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7258180633753A7A1A81BBA6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9F9B8C5423F79605DD691091 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,6 +320,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ECADCF90D9A12ADC4B84C60B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Pixels/Pods-Pixels-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -342,6 +353,7 @@
 				44E7807C244DCAF700491EF7 /* AppDelegate.swift in Sources */,
 				4427962F24530EBA00A17E33 /* VideoCollectionViewCell.swift in Sources */,
 				442796332453228100A17E33 /* VideoHeaderView.swift in Sources */,
+				44F561F124E4EC5400BCA0B1 /* EditImageViewController.swift in Sources */,
 				44D7D0CC24506470005CA062 /* structures.swift in Sources */,
 				44F0B327244EC1A5008A5C1F /* String.swift in Sources */,
 				4427962B2452D86400A17E33 /* VideosViewController.swift in Sources */,
@@ -428,7 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -482,7 +494,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -494,13 +506,13 @@
 		};
 		44E7808D244DCAFA00491EF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEA0B64ABDB8C086B2BAF12D /* Pods-Pixels.debug.xcconfig */;
+			baseConfigurationReference = 7AADB89C02DAC41995FEE21B /* Pods-Pixels.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9W5STY688V;
 				INFOPLIST_FILE = Pixels/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -514,13 +526,13 @@
 		};
 		44E7808E244DCAFA00491EF7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B115FB5CCECCC4BF6090F48B /* Pods-Pixels.release.xcconfig */;
+			baseConfigurationReference = 12BA1288A6A3B644165EA2B4 /* Pods-Pixels.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9W5STY688V;
 				INFOPLIST_FILE = Pixels/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
