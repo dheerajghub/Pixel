@@ -22,6 +22,7 @@ class EditImageViewController: UIViewController {
     var context: CIContext!
     var currentFilter: CIFilter!
     var selectedIndex:Int = 0
+    var changesMade:Bool!
    
     let imageView:UIImageView = {
         let img = UIImageView()
@@ -79,11 +80,13 @@ class EditImageViewController: UIViewController {
             filterEffect(filterName: "Transfer", filterCIName: "CIPhotoEffectTransfer"),
             filterEffect(filterName: "Sepia Tone", filterCIName: "CISepiaTone")
         ]
+        
+        changesMade = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let index = IndexPath(row: 0, section: 0)
-        imageView.image = setImageFilter(filters[0].filterCIName, selectedImg)
+        imageView.image = originalImg
         collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
     }
     
@@ -109,19 +112,23 @@ class EditImageViewController: UIViewController {
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
-        saveButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         let rightBarButtonItem = UIBarButtonItem()
         rightBarButtonItem.customView = saveButton
         navigationItem.setRightBarButton(rightBarButtonItem, animated: false)
-        
     }
     
     @objc func backBtn(){
-        dismiss(animated: true, completion: nil)
+        if changesMade {
+            alertSheet()
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
-    @objc func editButtonPressed(){
-        
+    @objc func saveButtonPressed(){
+        guard let image = self.imageView.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     func setUpConstraints(){
@@ -156,18 +163,54 @@ class EditImageViewController: UIViewController {
         return UIImage()
     }
     
+    func alertSheet(){
+        let optionMenu = UIAlertController(title: "Are you sure?", message: "If you go back now, your image edit will be discarded", preferredStyle: .alert)
+        let Discard = UIAlertAction(title: "Cancel", style: .destructive , handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Stay", style: .cancel)
+        optionMenu.addAction(Discard)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            let ac = UIAlertController(title: "Error while saving!", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "Image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default , handler: {
+                (UIAlertAction) -> Void in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            present(ac, animated: true)
+            
+        }
+    }
+    
 }
 
 extension EditImageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filters.count
+        return filters.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterPreviewCollectionViewCell", for: indexPath) as! FilterPreviewCollectionViewCell
-        cell.filteredImage.image = setImageFilter(filters[indexPath.row].filterCIName , resizeImage(image: selectedImg, targetSize: CGSize(width: 100, height: 100)))
-        cell.filterName.text = filters[indexPath.row].filterName
+        if indexPath.row > 0 {
+            cell.filteredImage.image = setImageFilter(filters[indexPath.row - 1].filterCIName , resizeImage(image: selectedImg, targetSize: CGSize(width: 100, height: 100)))
+            cell.filterName.text = filters[indexPath.row - 1].filterName
+        } else {
+            cell.filteredImage.image = originalImg
+            cell.filterName.text = "Normal"
+        }
+        
         return cell
     }
     
@@ -191,7 +234,14 @@ extension EditImageViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedIndex != indexPath.row {
-            imageView.image = setImageFilter(filters[indexPath.row].filterCIName, selectedImg)
+            if indexPath.row > 0 {
+                imageView.image = setImageFilter(filters[indexPath.row - 1].filterCIName, selectedImg)
+                changesMade = true
+            } else {
+                imageView.image = originalImg
+                changesMade = false
+            }
+            
         }
         selectedIndex = indexPath.row
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
