@@ -12,7 +12,7 @@ New Feature Added: Now download images and add filters to it using Core Image fr
 - Image Caching
 - Pagination
 - Onboarding
-- ##Adding Filters to image using Core Image framework.
+- Adding Filters to image using Core Image framework.
 
 ## Snapshots
 <p align="center"><img src="https://imgur.com/ycStAmm.png" height="400"> <img src="https://imgur.com/7qbivs3.png" height="400"> <img src="https://imgur.com/H3Vp3Tl.png" height="400"> <img src="https://imgur.com/weNgE9i.png" height="400"></p>
