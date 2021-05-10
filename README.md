@@ -34,7 +34,7 @@ If you like these projects and you want to support me , buy me a coffee.
 
 [![Paypal](https://imgur.com/FokjFDA.png)](https://paypal.me/PayDheeraj)
 
-## Do you like Design to Code series? Go Spread a word!
+## Do you like Pexel? Go Spread a word!
 Just give it a star ⭐️ and spread the word!
 
 ## Credits
