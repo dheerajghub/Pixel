@@ -29,7 +29,7 @@ New Feature Added: Now download images and add filters to it using Core Image fr
 ## Stuck Somewhere or having trouble ?
 Drop me mail @ dheerajsh123456@gmail.com
 
-## Donations
+## Support
 If you like these projects and you want to support me , buy me a coffee.
 
 [![Paypal](https://imgur.com/FokjFDA.png)](https://paypal.me/PayDheeraj)
